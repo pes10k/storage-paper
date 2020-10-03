@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{laperdrix2017fprandom}
+{\sc Laperdrix, P., Baudry, B., and Mishra, V.}
+\newblock Fprandom: Randomizing core browser objects to break advanced device
+  fingerprinting techniques.
+\newblock In {\em International Symposium on Engineering Secure Software and
+  Systems\/} (2017), Springer, pp.~97--114.
+
+\bibitem{nikiforakis2015privaricator}
+{\sc Nikiforakis, N., Joosen, W., and Livshits, B.}
+\newblock Privaricator: Deceiving fingerprinters with little white lies.
+\newblock In {\em Proceedings of the 24th International Conference on World
+  Wide Web\/} (2015), pp.~820--830.
+
+\end{thebibliography}

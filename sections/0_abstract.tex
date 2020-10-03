@@ -1,0 +1,28 @@
+\begin{abstract}
+  While much current Web privacy research focuses on browser fingerprinting,
+  or techniques to uniquely identifying a browser based on its configuration
+  and environment that do not rely on setting state, the boring fact is that
+  the majority of current third-party Web tracking is conducted using
+  traditional, state-set identifers. One possible explanation for the privacy
+  community's focus on fingerprinting is that to date browsers have faced a
+  loose-loose choice when dealing with third-party stateful identifers: block
+  state in third-party frames and break a significant number of
+  webpages, or allow state in third-party frames and enable pervasive tracking.
+
+  This work furthers privacy on the \Web{} by presenting a novel system for
+  managing the lifetime of third-party storage, "\ToolName{}".  We compare
+  \ToolName{} to existing approaches for managing third-party state and find
+  that \ToolName{} has the privacy protections of the most restrictive current
+  option (\IE{} blocking third party storage) but  web-compatibility
+  properties mostly similar to the least restrictive option (\IE{} allowing all
+  third-party storage).
+
+  This work also compares \ToolName{} to other deployed, hybrid
+  approaches for managing third-party storage (such as those shipped in Firefox
+  and Safari) and find that \ToolName{} provides superior privacy protections
+  with similar or superior web-compatibility. Additionally, we provide a
+  dataset of the privacy and compatibility behaviors observed when
+  applying different third-party storage strategies on a crawl
+  of the \WebDataSet{}. Finally, we provide an open-source implementation
+  of our \ToolName{} approach, implemented as patches against Chromium.
+\end{abstract}

@@ -1,0 +1,92 @@
+\section{Introduction}
+\label{sec:intro}
+
+As existing \Web{} privacy research has demonstrated, \Web{} trackers use
+a variety of techniques to track and violate privacy on the \Web{}. Browser
+tracking is usually done through a mix of stateful tracking (\IE{} storing and
+transmitting unique identifers in the user's browser) and stateless tracking, or
+fingerprinting (\IE{} attempting to uniquely identify a browser based on unique
+browser configuration and execution environment characteristics).
+
+Though much recent privacy work has focused on stateless, fingerprinting based
+tracking, we expect that the majority of tracking is still done using
+traditional stateful methods. This intuition is based on multiple factors,
+including…
+
+While the privacy community has had some success in designing defenses
+to stateless, fingerprinting tracking that protect users without breaking
+benign, user-serving page functionality\cite{laperdrix2017fprandom,
+nikiforakis2015privaricator}, the researchers, industry and activists have been
+less successful in designing practical, robust defenses against stateful
+\TP{} tracking.
+
+Despite the press and attention that the "end of \TP{} cookies" has
+received, blocking \TP{} cookies (\IE{} not sending cookies on
+requests for \TP{} sub-resources) does not provide any fundamental
+protections against stateful \TP{} tracking. Blocking \TP{} cookies is a positive
+step for \Web{} privacy, but because it prevents categories of accidental
+tracking or information disclosure, not because it prevents intentional
+tracking. \TPu{} frames can access the same cookies \footnote{\FNOne{}},
+\texttt{localStorage}\footnote{\FNTwo{}}, \texttt{IndexDB}\footnote{\FNThree{}},
+or other \JS{} accessible storage methods. In short, blocking \TP{} cookies
+is a necessary, but insufficient part of solving the general problem of
+preventing stateful \TP{} tracking.
+
+Though some browser vendors have taken some steps to address \TP{} stateful
+tracking, each approach has significant shortcomings and limitations.
+The details of each technique are described in
+Section\ref{sec:background:browsers}, but at a high level some approaches
+likely miss significant tracking because they depend on curated lists and
+heuristics (\IE{} Firefox and Edge), some approaches address tracking across
+sites but not time (\IE{} Safari), and some approaches provide strong
+protections against tracking but break sites for users (\IE{} Brave); Chrome
+provides no significant defense against \TP{} stateful tracking.
+
+We argue that practical, robust protections against stateful, \TP{} tracking
+should have at least three properties.
+
+\begin{enumerate}
+  \item \textbf{Cross-site protection}: prevent \TPs{} from using
+    stored identifiers to link browsing behavior across \FP{} sites.
+  \item \textbf{Longitudinal protection}: prevent \TPs{} from using stored
+    identifiers to link browsing behavior on the same \FP{} site across
+    time.
+  \item \textbf{Web Compatibility}: not effect (or minimally impact)
+    user-serving, non-storage behavior in \TP{} frames.
+\end{enumerate}
+
+In this work we aim to improve \Web{} privacy by presenting a new method of
+managing and limiting \TP{} state that we call "\ToolName{}".
+Section \ref{sec:design} presents the approach in detail, but
+at a high level, "\ToolName{}" is the unique combination of two features:
+
+First, \textbf{\ToolName{} partitions \TP{} state by the top level document}.
+If a browser tab has loaded a page from origin A,
+and that page includes two sub-documents (\IE{} \IFrame{}s) from origin B,
+the two sub-documents see the same storage, but different storage than B sees
+when B is the top-level document, and also different storage than origin B
+sub-documents on other pages and tabs.
+
+Second, \textbf{\ToolName{} sets the lifetime of all \TPs{} state to be equal
+to the lifetime of the top level document}.  If a page from origin A opens and
+closes \IFrames{} from origin B, all of those origin B frames will see the same
+storage, even between frames being opened and closed. However, once the page
+is closed, all the partitioned storage for B is cleared as well.
+Revisiting or reloading the page will result in B seeing empty storage.
+
+More concretely, this work makes the following contributions to improving
+privacy on the \Web{}.
+
+\begin{enumerate}
+  \item We propose \textbf{a novel approach to managing \TP{} state} in
+    \Web{} pages we call \ToolName{}.
+  \item We provide an \textbf{open-source, prototype implementation} of
+    \ToolName{} as a series of modifications to Chromium.
+  \item We define \textbf{metrics for measuring the privacy and
+    web-compatibility} properties of an arbitrary \TP{} storage policies.
+  \item We release a \textbf{dataset of applying \NumStoragePolicies{} storage
+    policies to the \WebDataSet{}}, including the above privacy and
+    compatibility metrics.  The \NumStoragePolicies{} policies selected are
+    designed to approximate the \TP{} storage policies currently deployed
+    in popular browsers.
+\end{enumerate}
